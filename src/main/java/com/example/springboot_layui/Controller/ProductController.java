@@ -1,6 +1,8 @@
 package com.example.springboot_layui.Controller;
 
+import com.example.springboot_layui.Dao.PersonDao;
 import com.example.springboot_layui.Service.ProductService;
+import com.example.springboot_layui.entity.PersonEntity;
 import com.example.springboot_layui.vo.BarVo;
 import com.example.springboot_layui.vo.DataVo;
 import com.example.springboot_layui.vo.ProductPieVo;
@@ -16,6 +18,8 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private PersonDao personDao;
     @RequestMapping("/list")
     @ResponseBody
     public DataVo list(Integer page, Integer limit){
@@ -39,4 +43,15 @@ public class ProductController {
     public List<ProductPieVo>get(){
         return productService.getPieVo();
     }
+
+
+    @GetMapping(value="/login")
+    @ResponseBody
+    @CrossOrigin
+    public String Login(@RequestBody PersonEntity personEntity) {
+        PersonEntity personEntityCheck =personDao.check(personEntity.getUsername(),personEntity.getPassword());
+        System.out.println(personEntity.getUsername());
+        return "error";
+    }
+
 }
